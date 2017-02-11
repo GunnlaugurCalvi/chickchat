@@ -1,0 +1,6 @@
+<input [(ngModel)]="userName" />
+<button (click)="onLogin()">Login</button>
+
+<div *ngIf="loginFailed">
+  Sorry, This username is already taking choose anotha one
+</div>
