@@ -6,10 +6,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./rooms.component.css']
 })
 export class RoomsComponent implements OnInit {
-
+  room: string = 'strengur';
   constructor() { }
 
   ngOnInit() {
+
   }
 
 }

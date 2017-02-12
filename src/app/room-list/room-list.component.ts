@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 export class RoomListComponent implements OnInit {
   rooms: string[];
 
-  constructor(private chatService: ChatService,  private router: Router) { }
+  constructor(private chatService: ChatService, private router: Router) { }
 
   ngOnInit() {
     this.chatService.getRoomList().subscribe(lst => {
@@ -21,7 +21,6 @@ export class RoomListComponent implements OnInit {
 
   joinRoom(room) {
     this.chatService.joinRoom(room).subscribe(isSuccess => {
-
       if (isSuccess) {
         console.log('Joining a room: ' + room);
         alert('Joining a room: ' + room);
@@ -30,7 +29,7 @@ export class RoomListComponent implements OnInit {
       }
       if (isSuccess === true) {
         this.router.navigate(['/room']);
-      // TODO REDIRECT TO ROOM-LIST COMPONENT
+      // TODO REDIRECT TO ROOM COMPONENT
       }
     });
   }
