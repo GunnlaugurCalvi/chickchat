@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ChatService } from "../chat.service";
+import { ChatService } from '../chat.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-room-list',
@@ -7,15 +8,30 @@ import { ChatService } from "../chat.service";
   styleUrls: ['./room-list.component.css']
 })
 export class RoomListComponent implements OnInit {
+  rooms: string[];
 
-  constructor(private  chatService : ChatService) { }
-
-  rooms : string[];
+  constructor(private chatService: ChatService,  private router: Router) { }
 
   ngOnInit() {
-    this.chatService.getRoomList().subscribe(lst =>{
+    this.chatService.getRoomList().subscribe(lst => {
       this.rooms = lst;
+      console.log(this.rooms);
     });
   }
 
+  joinRoom(room) {
+    this.chatService.joinRoom(room).subscribe(isSuccess => {
+
+      if (isSuccess) {
+        console.log('Joining a room: ' + room);
+        alert('Joining a room: ' + room);
+      } else {
+        console.log('same name no game');
+      }
+      if (isSuccess === true) {
+      // this.router.navigate(['/room']);
+      // TODO REDIRECT TO ROOM-LIST COMPONENT
+      }
+    });
+  }
 }

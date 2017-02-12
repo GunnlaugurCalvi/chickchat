@@ -1,0 +1,14 @@
+.room {
+    color: white;
+    font-size: 20px;
+    cursor: pointer; 
+}
+
+.room:hover {
+    font-weight: bold;
+    
+}
+
+ul {
+    list-style-type: none;
+}

@@ -1,6 +1,17 @@
-<input [(ngModel)]="userName" />
-<button (click)="onLogin()">Login</button>
 
-<div *ngIf="loginFailed">
-  Sorry, This username is already taking choose anotha one
+<div class="splash-container">
+  <div class="splash">
+    <div class="splash-head">
+      <h1>Log into Chitchat</h1>
+    </div>
+      <form class="pure-form">
+        <fieldset>
+          <input type="text" name="userName" class="pure-input-rounded pure-input-1-2 align-input" [(ngModel)]="userName" placeholder="Username" required>
+        </fieldset>
+        <a type="submit" class="pure-input-1-2 loginbutton" (click)="onLogin()">Login</a>
+      </form>
+    <div class="splash-subhead" *ngIf="loginFailed">
+      Sorry, This username is already taken.
+    </div>
+  </div>
 </div>
