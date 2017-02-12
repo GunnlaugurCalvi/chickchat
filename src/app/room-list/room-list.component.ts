@@ -26,10 +26,10 @@ export class RoomListComponent implements OnInit {
         console.log('Joining a room: ' + room);
         alert('Joining a room: ' + room);
       } else {
-        console.log('same name no game');
+        console.log('no game');
       }
       if (isSuccess === true) {
-      // this.router.navigate(['/room']);
+        this.router.navigate(['/room']);
       // TODO REDIRECT TO ROOM-LIST COMPONENT
       }
     });

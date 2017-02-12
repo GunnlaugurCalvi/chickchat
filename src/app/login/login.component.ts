@@ -26,13 +26,11 @@ export class LoginComponent implements OnInit {
     this.chatService.login(this.userName).subscribe(isSuccess => {
       if (this.loginFailed === !isSuccess) {
         console.log('successfully added');
-        alert(this.userName + ' has been added');
       } else {
         console.log('same name no game');
-        alert(this.userName + ' naaaaa be creative');
       }
       if (isSuccess === true) {
-        this.router.navigate(['/rooms']);
+        this.router.navigate(['/roomlist']);
       // TODO REDIRECT TO ROOM-LIST COMPONENT
       }
     });

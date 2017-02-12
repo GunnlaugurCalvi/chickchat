@@ -30,8 +30,11 @@ import { RouterModule} from '@angular/router';
       path: "login",
       component: LoginComponent
     },{
-      path: "rooms",
+      path: "roomlist",
       component: RoomListComponent
+    },{
+      path: "room",
+      component: RoomsComponent
     }])
   ],
   providers: [ChatService],
