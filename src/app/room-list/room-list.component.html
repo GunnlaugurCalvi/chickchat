@@ -1,9 +1,10 @@
-<button class="pure-button">Make a new room</button>
+<input [(ngModel)]="newRoomName" placeholder="Room name" type="text" style="color: black" />
+<button (click)="onNewRoom()" class="pure-button">Make a new room</button>
 <h1>Available chatrooms</h1>
 <div class="pure-menu custom-restricted-width">
   <ul class="pure-menu-list">
     <li class="pure-menu-item" *ngFor="let room of rooms">
-      <a (click)="joinRoom(room)" class="room">{{room}}</a>
+      <a [routerLink]="['/room', room]" class="room">{{room}}</a>
     </li>
   </ul>
 </div>

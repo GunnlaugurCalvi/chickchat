@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 })
 export class RoomListComponent implements OnInit {
   rooms: string[];
-
+  newRoomName: string;
   constructor(private chatService: ChatService, private router: Router) { }
 
   ngOnInit() {
@@ -18,18 +18,21 @@ export class RoomListComponent implements OnInit {
       console.log(this.rooms);
     });
   }
-
-  joinRoom(room) {
-    this.chatService.joinRoom(room).subscribe(isSuccess => {
-      if (isSuccess) {
-        console.log('Joining a room: ' + room);
-        alert('Joining a room: ' + room);
+  onNewRoom(){
+    if(this.newRoomName.length < 1){
+      console.log('no room name entered');
+      alert('pleasse enter a name for room');
+      return;
+    }
+    this.chatService.addRoom(this.newRoomName).subscribe(successful => {
+      if (successful) {
+        console.log('Adding a room: ' + this.newRoomName);
+        alert('Adding a room: ' + this.newRoomName);
       } else {
         console.log('no game');
       }
-      if (isSuccess === true) {
-        this.router.navigate(['/room']);
-      // TODO REDIRECT TO ROOM COMPONENT
+      if(successful === true){
+        this.router.navigate(["/room", this.newRoomName])
       }
     });
   }

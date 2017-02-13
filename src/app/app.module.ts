@@ -33,7 +33,7 @@ import { RouterModule} from '@angular/router';
       path: "roomlist",
       component: RoomListComponent
     },{
-      path: "room",
+      path: "room/:id",
       component: RoomsComponent
     }])
   ],

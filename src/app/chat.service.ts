@@ -37,11 +37,15 @@ export class ChatService {
     });
     return obs;
   }
-  joinRoom(room: string): Observable<boolean> {
+
+  addRoom(roomName : string) : Observable<boolean>{
     const observable = new Observable(observer => {
-      this.socket.emit('joinroom', {name: room, pass: null}, successful => {
-        console.log('Replay received');
-        return observer.next(successful);
+      var param = {
+        room: roomName,
+        pass: null
+      };
+      this.socket.emit("joinroom", param, function(a : boolean, b){
+        observer.next(a);
       });
     });
     return observable;
