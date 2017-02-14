@@ -18,8 +18,8 @@ export class RoomListComponent implements OnInit {
       console.log(this.rooms);
     });
   }
-  onNewRoom(){
-    if(this.newRoomName.length < 1){
+  onNewRoom() {
+    if (this.newRoomName.length < 1) {
       console.log('no room name entered');
       alert('pleasse enter a name for room');
       return;
@@ -31,8 +31,8 @@ export class RoomListComponent implements OnInit {
       } else {
         console.log('no game');
       }
-      if(successful === true){
-        this.router.navigate(["/room", this.newRoomName])
+      if (successful === true) {
+        this.router.navigate(['/room', this.newRoomName]);
       }
     });
   }

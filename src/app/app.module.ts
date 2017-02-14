@@ -23,20 +23,20 @@ import { RouterModule} from '@angular/router';
     FormsModule,
     HttpModule,
     RouterModule.forRoot([{
-      path: "",
-      redirectTo: "login",
-      pathMatch: "full"
+      path: '',
+      redirectTo: 'login',
+      pathMatch: 'full'
     }, {
-      path: "login",
+      path: 'login',
       component: LoginComponent
-    },{
-      path: "roomlist",
+    }, {
+      path: 'roomlist',
       component: RoomListComponent
-    },{
-      path: "room/:id",
+    }, {
+      path: 'room/:id',
       component: RoomsComponent
-    },{
-      path: "**",
+    }, {
+      path: '**',
       redirectTo: '/login'
     }])
   ],

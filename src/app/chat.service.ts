@@ -38,13 +38,13 @@ export class ChatService {
     return obs;
   }
 
-  addRoom(roomName : string) : Observable<boolean>{
+  addRoom(roomName: string): Observable<boolean> {
     const observable = new Observable(observer => {
-      var param = {
+      const param = {
         room: roomName,
         pass: null
       };
-      this.socket.emit("joinroom", param, function(a : boolean, b){
+      this.socket.emit('joinroom', param, function(a: boolean, b){
         observer.next(a);
       });
     });
