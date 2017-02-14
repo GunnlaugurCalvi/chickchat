@@ -5,10 +5,10 @@
     </div>
     <form class="pure-form">
       <fieldset>
-        <input type="text" name="userName" class="pure-input-rounded pure-input-1-2 align-input" [(ngModel)]="userName" placeholder="Username"
-          required>
+        <input type="text" name="userName" class="pure-input-rounded pure-input-1-2 align-input"
+          [(ngModel)]="userName" placeholder="Username" required>
       </fieldset>
-      <a type="submit" class="pure-input-1-2 loginbutton" (click)="onLogin()">Login</a>
+      <button type="submit" class="pure-input-1-2 pure-button loginbutton" (click)="onLogin()">Login</button>
     </form>
     <div class="splash-subhead" *ngIf="loginFailed">
       Sorry, This username is already taken.

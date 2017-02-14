@@ -18,22 +18,26 @@ export class RoomListComponent implements OnInit {
       console.log(this.rooms);
     });
   }
-  onNewRoom() {
-    if (this.newRoomName.length < 1) {
-      console.log('no room name entered');
-      alert('pleasse enter a name for room');
-      return;
+  newRoom() {
+    if (this.newRoomName) {
+      this.chatService.addRoom(this.newRoomName).subscribe(successful => {
+        if (successful) {
+          console.log('Adding a room: ' + this.newRoomName);
+          this.router.navigate(['/room', this.newRoomName]);
+        } else {
+          console.log('ERROR: Couldn\'t add a room');
+        }
+      });
     }
-    this.chatService.addRoom(this.newRoomName).subscribe(successful => {
+  }
+  joinRoom(room) {
+    this.chatService.joinRoom(room).subscribe(successful => {
       if (successful) {
-        console.log('Adding a room: ' + this.newRoomName);
-        alert('Adding a room: ' + this.newRoomName);
+        console.log('Joining room: ' + room);
       } else {
-        console.log('no game');
-      }
-      if (successful === true) {
-        this.router.navigate(['/room', this.newRoomName]);
+        console.log('ERROR: Couldn\'t join ' + room);
       }
     });
+    this.router.navigate(['/room/' + room]);
   }
 }

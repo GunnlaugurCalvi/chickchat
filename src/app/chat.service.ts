@@ -9,14 +9,13 @@ export class ChatService {
   constructor() {
     this.socket = io('http://localhost:8080/');
     this.socket.on('connect', isConnected => {
-      console.log('connect');
+      console.log('Connected');
     });
   }
 
   login(userName: string): Observable<boolean> {
     const observable = new Observable(observer => {
       this.socket.emit('adduser', userName, successful => {
-        console.log('Replay recevied');
         return observer.next(successful);
       });
     });
@@ -28,7 +27,7 @@ export class ChatService {
       this.socket.on('roomlist', (lst) => {
         const strArr: string[] = [];
         for (const x in lst) {
-          if (x !== null && x !== 'undefined') {
+          if (x !== null) {
             strArr.push(x);
           }
         }
@@ -40,12 +39,16 @@ export class ChatService {
 
   addRoom(roomName: string): Observable<boolean> {
     const observable = new Observable(observer => {
-      const param = {
-        room: roomName,
-        pass: null
-      };
-      this.socket.emit('joinroom', param, function(a: boolean, b){
+      this.socket.emit('joinroom', {room: roomName, pass: null}, function(a: boolean, b){
         observer.next(a);
+      });
+    });
+    return observable;
+  }
+  joinRoom(roomName: string): Observable<boolean> {
+    const observable = new Observable(observer => {
+      this.socket.emit('joinroom', {room: roomName, pass: null} , successful => {
+        return observer.next(successful);
       });
     });
     return observable;
