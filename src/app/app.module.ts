@@ -35,6 +35,9 @@ import { RouterModule} from '@angular/router';
     },{
       path: "room/:id",
       component: RoomsComponent
+    },{
+      path: "**",
+      redirectTo: '/login'
     }])
   ],
   providers: [ChatService],
