@@ -11,16 +11,35 @@ export class ChatService {
     this.socket.on('connect', isConnected => {
       console.log('Connected');
     });
+    this.socket.on('updateusers', (room, users, ops) => {
+      console.log('UPDATE USERS');
+      console.log(users);
+      console.log(ops);
+    });
+    this.socket.on('updatechat', function(room, msg) {
+      console.log('UPDATE CHAT');
+      console.log(msg);
+    });
   }
 
   login(userName: string): Observable<boolean> {
     const observable = new Observable(observer => {
-      this.socket.emit('adduser', userName, successful => {
-        return observer.next(successful);
+      this.socket.emit('adduser', userName, function(successful) {
+        observer.next(successful);
       });
     });
     return observable;
   }
+
+  joinRoom(roomName: string): Observable<boolean> {
+    const observable = new Observable(observer => {
+      this.socket.emit('joinroom', {room: roomName, pass: null}, function(successful) {
+        observer.next(successful);
+      });
+    });
+    return observable;
+  }
+
   getRoomList(): Observable<string[]> {
     const obs = new Observable( observer => {
       this.socket.emit('rooms');
@@ -39,16 +58,19 @@ export class ChatService {
 
   addRoom(roomName: string): Observable<boolean> {
     const observable = new Observable(observer => {
-      this.socket.emit('joinroom', {room: roomName, pass: null}, function(a: boolean, b){
-        observer.next(a);
-      });
+      this.socket.emit('joinroom', {room: roomName, pass: null});
     });
     return observable;
   }
-  joinRoom(roomName: string): Observable<boolean> {
+
+  sendMessage(param): Observable<boolean> {
     const observable = new Observable(observer => {
-      this.socket.emit('joinroom', {room: roomName, pass: null} , successful => {
-        return observer.next(successful);
+      this.socket.emit('sendmsg', param, function(successful) {
+        if (successful) {
+          console.log('WOW WE JOINED!');
+        } else {
+          console.log('ERROR: COULDN\'T SEND MESSAGE');
+        }
       });
     });
     return observable;

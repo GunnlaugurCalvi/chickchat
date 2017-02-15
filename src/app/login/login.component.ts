@@ -24,14 +24,11 @@ export class LoginComponent implements OnInit {
       return;
     }
     this.chatService.login(this.userName).subscribe(isSuccess => {
-      if (this.loginFailed === !isSuccess) {
+      if (isSuccess) {
         console.log('successfully logged user in');
+        this.router.navigate(['/roomlist']);
       } else {
         console.log('ERROR: Couldn\'t log user in');
-      }
-      if (isSuccess === true) {
-        this.router.navigate(['/roomlist']);
-      // TODO REDIRECT TO ROOM-LIST COMPONENT
       }
     });
 

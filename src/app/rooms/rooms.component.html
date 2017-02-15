@@ -1,4 +1,6 @@
-<ul id="messages"></ul>
-<form action="">
-  <input id="m" autocomplete="off" /><button>Send</button>
+<ul name="messages"></ul>
+
+<form class="pure-form">
+  <input type="text" name="message" class="pure-input-rounded" [(ngModel)]="message" placeholder="Message" required/>
+  <input type="button" (click)="sendMsg()" value="Send" />
 </form>
