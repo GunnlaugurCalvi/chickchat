@@ -1,20 +1,64 @@
+<router-outlet></router-outlet>
+
+<div class="row">
+  <div class="center">
+    <h1>Chitchat</h1>
+  </div>
+  
+  <div class="col s12 m8 l9">
+    <h3>Messages</h3>
+    <ul name="messages" class="collection">
+      <li class="row collection-item">
+        <span class="">
+          TEST: 
+        </span>
+        <span>WOW MESSAGE</span>
+      </li>
+
+      <li class="row" *ngFor="let message of messages">
+        <span class="">
+          AXEL:
+        </span>
+        <span>{{message}}</span>
+      </li>
+    </ul>
+
+    <div class="row">
+      <form class="col s12">
+        <div class="row">
+          <div class="input-field col s9">
+            <input [(ngModel)]="message" [ngModelOptions]="{standalone: true}" id="message" class="validate">
+            <label class="active" for="message">Message</label>
+          </div>
+          <div class="input-field col s3">
+            <button class="btn waves-effect waves-light" (click)="sendMsg()" type="submit" name="action">Send
+              <i class="material-icons right">send</i>
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+
+
 <ul name="messages"></ul>
 
-<form class="pure-form">
-</form>
-
+<!--
 <div class="row">
   <form class="col s12">
     <div class="row">
-      <div class="input-field col s12">
-        <textarea [(ngModel)]="message" [ngModelOptions]="{standalone: true}" id="message" class="materialize-textarea" ngDefaultControl ></textarea>
-        <label for="message">Message</label>
+      <div class="input-field col s9">
+        <input [(ngModel)]="message" [ngModelOptions]="{standalone: true}" id="message" class="validate">
+        <label class="active" for="message">Message</label>
       </div>
-    <div class="row">
-      <button class="btn waves-effect waves-light" (click)="sendMsg()" type="submit" name="action">Send
-        <i class="material-icons right">send</i>
-      </button>
-    </div>
+      <div class="input-field col s3">
+        <button class="btn waves-effect waves-light" (click)="sendMsg()" type="submit" name="action">Send
+          <i class="material-icons right">send</i>
+        </button>
+      </div>
     </div>
   </form>
-</div>
+</div>-->
