@@ -7,7 +7,7 @@
   <form class="col s12">
     <div class="row">
       <div class="input-field col s12">
-        <textarea id="message" class="materialize-textarea" ngDefaultControl [(ngModel)]="message"></textarea>
+        <textarea [(ngModel)]="message" [ngModelOptions]="{standalone: true}" id="message" class="materialize-textarea" ngDefaultControl ></textarea>
         <label for="message">Message</label>
       </div>
     <div class="row">
