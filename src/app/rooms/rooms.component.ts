@@ -8,6 +8,7 @@ import { Router, ActivatedRoute } from '@angular/router';
   styleUrls: ['./rooms.component.css']
 })
 export class RoomsComponent implements OnInit {
+  messages: Object[];
   roomId: string;
   message: string;
 
@@ -16,6 +17,10 @@ export class RoomsComponent implements OnInit {
   ngOnInit() {
     this.roomId = this.route.snapshot.params['id'];
     console.log(this.roomId);
+    this.chatService.getMessages(this.roomId).subscribe(lst => {
+      this.messages = lst;
+      console.log(this.messages);
+    });
   }
   sendMsg() {
     this.chatService.sendMessage({roomName: this.roomId, msg: this.message}).subscribe(successful => {

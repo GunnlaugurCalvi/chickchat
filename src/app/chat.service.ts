@@ -1,3 +1,4 @@
+import { RoomsComponent } from './rooms/rooms.component';
 import { Injectable } from '@angular/core';
 import * as io from 'socket.io-client';
 import { Observable } from 'rxjs/Observable';
@@ -16,10 +17,7 @@ export class ChatService {
       console.log(users);
       console.log(ops);
     });
-    this.socket.on('updatechat', function(room, msg) {
-      console.log('UPDATE CHAT');
-      console.log(msg);
-    });
+
   }
 
   login(userName: string): Observable<boolean> {
@@ -74,5 +72,20 @@ export class ChatService {
       });
     });
     return observable;
+  }
+
+  getMessages(_room): Observable<string[]> {
+    const obs = new Observable( observer => {
+      this.socket.on('updatechat', function(room, msg) {
+        const strArr: string[] = [];
+        for (const x in msg) {
+          if (x !== null && _room === room) {
+            strArr.push(x);
+          }
+        }
+        observer.next(strArr);
+      });
+    });
+    return obs;
   }
 }
