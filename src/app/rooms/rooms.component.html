@@ -8,13 +8,6 @@
   <div class="col s12 m8 l9">
     <h3>Messages</h3>
     <ul name="messages" class="collection">
-      <!--<li class="row collection-item">
-        <span class="">
-          TEST: 
-        </span>
-        <span>WOW MESSAGE</span>
-      </li>-->
-
       <li class="row collection-item" *ngFor="let message of messages">
         {{message.nick}} - {{message.message}}
       </li>

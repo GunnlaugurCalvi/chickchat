@@ -18,8 +18,8 @@ export class RoomsComponent implements OnInit {
     this.roomId = this.route.snapshot.params['id'];
     console.log(this.roomId);
     this.chatService.getMessages(this.roomId).subscribe(lst => {
+      console.log(lst);
       this.messages = lst;
-      console.log(this.messages);
     });
   }
   sendMsg() {

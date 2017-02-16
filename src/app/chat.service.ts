@@ -77,13 +77,13 @@ export class ChatService {
   getMessages(_room): Observable<string[]> {
     const obs = new Observable( observer => {
       this.socket.on('updatechat', function(room, msg) {
-        const strArr: string[] = [];
-        for (const x in msg) {
-          if (x !== null && _room === room) {
-            strArr.push(x);
-          }
-        }
-        observer.next(strArr);
+        // const strArr: Object[] = [];
+        // for (const x in msg) {
+        //   if (x !== null && _room === room) {
+        //     strArr.push(x);
+        //   }
+        // }
+        observer.next(msg);
       });
     });
     return obs;
