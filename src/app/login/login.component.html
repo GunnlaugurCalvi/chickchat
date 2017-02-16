@@ -1,17 +1,16 @@
-<div class="splash-container">
-  <div class="splash">
-    <div class="splash-head">
-      <h1>Log into Chitchat</h1>
+<div class="header center">
+  <h1>Log into Chitchat</h1>
+</div>
+<div class="row center">
+  <form class="">
+    <div class="row">
+      <div class="input-field col s12">
+        <input type="text" name="userName" class="validate" [(ngModel)]="userName" placeholder="Username" required>
+        <button type="submit" class="btn-large waves-effect waves-light" (click)="onLogin()">Login</button>
+      </div>
     </div>
-    <form class="pure-form">
-      <fieldset>
-        <input type="text" name="userName" class="pure-input-rounded pure-input-1-2 align-input"
-          [(ngModel)]="userName" placeholder="Username" required>
-      </fieldset>
-      <button type="submit" class="pure-input-1-2 pure-button loginbutton" (click)="onLogin()">Login</button>
-    </form>
-    <div class="splash-subhead" *ngIf="loginFailed">
-      Sorry, This username is already taken.
-    </div>
-  </div>
+  </form>
+</div>
+<div class="" *ngIf="loginFailed">
+  Sorry, This username is already taken.
 </div>

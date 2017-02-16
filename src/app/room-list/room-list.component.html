@@ -1,16 +1,9 @@
-
 <form class="pure-form">
   <input type="text" name="roomName" class="pure-input-rounded" [(ngModel)]="newRoomName" placeholder="Room name" required/>
   <button type="submit" (click)="newRoom()" class="pure-input-1-2 pure-button">Make a new room</button>
 </form>
 
-
-
 <h1>Available chatrooms</h1>
-<div class="pure-menu custom-restricted-width">
-  <ul class="pure-menu-list">
-    <li class="pure-menu-item" *ngFor="let room of rooms">
-      <a class="room" (click)="joinRoom(room)">{{room}}</a>
-    </li>
-  </ul>
-</div>
+<ul class="collection">
+  <a class="collection-item" (click)="joinRoom(room)" *ngFor="let room of rooms">{{room}}</a>
+</ul>
