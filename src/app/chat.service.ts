@@ -12,11 +12,7 @@ export class ChatService {
     this.socket.on('connect', isConnected => {
       console.log('Connected');
     });
-    this.socket.on('updateusers', (room, users, ops) => {
-      console.log('UPDATE USERS');
-      console.log(users);
-      console.log(ops);
-    });
+
 
   }
 
@@ -63,7 +59,7 @@ export class ChatService {
 
   sendMessage(param): Observable<boolean> {
     const observable = new Observable(observer => {
-      this.socket.emit('sendmsg', param, function(successful) {
+      this.socket.emit('sendmsg', param, (successful) => {
         if (successful) {
           console.log('WOW WE JOINED!');
         } else {
@@ -76,14 +72,21 @@ export class ChatService {
 
   getMessages(_room): Observable<string[]> {
     const obs = new Observable( observer => {
-      this.socket.on('updatechat', function(room, msg) {
-        // const strArr: Object[] = [];
-        // for (const x in msg) {
-        //   if (x !== null && _room === room) {
-        //     strArr.push(x);
-        //   }
-        // }
-        observer.next(msg);
+      this.socket.on('updatechat', (room, msg) => {
+        if (_room === room) {
+          observer.next(msg);
+        }
+      });
+    });
+    return obs;
+  }
+
+  getUsers(_room): Observable<string[]> {
+    const obs = new Observable( observer => {
+      this.socket.on('updateusers', (room, users, ops) => {
+        if (_room === room) {
+          observer.next({room: room, users: users, ops: ops});
+        }
       });
     });
     return obs;
