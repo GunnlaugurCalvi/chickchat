@@ -18,7 +18,9 @@
       "prefix": "app",
       "mobile": false,
       "styles": [
+        "../node_modules/ng2-toastr/bundles/ng2-toastr.min.css",
         "styles.css"
+
       ],
       "scripts": [],
       "environments": {

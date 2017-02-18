@@ -9,6 +9,8 @@ import { RoomListComponent } from './room-list/room-list.component';
 import { RoomsComponent } from './rooms/rooms.component';
 import { ChatService } from './chat.service';
 import { RouterModule} from '@angular/router';
+import { ToastModule, ToastOptions } from 'ng2-toastr/ng2-toastr';
+
 
 
 @NgModule({
@@ -23,6 +25,10 @@ import { RouterModule} from '@angular/router';
     FormsModule,
     ReactiveFormsModule,
     HttpModule,
+    ToastModule.forRoot([{
+      animate: 'flyRight',
+      positionClass: 'toast-bottom-right'
+    }]),
     RouterModule.forRoot([{
       path: '',
       redirectTo: 'login',

@@ -12,8 +12,6 @@ export class ChatService {
     this.socket.on('connect', isConnected => {
       console.log('Connected');
     });
-
-
   }
 
   login(userName: string): Observable<boolean> {
@@ -52,7 +50,9 @@ export class ChatService {
 
   addRoom(roomName: string): Observable<boolean> {
     const observable = new Observable(observer => {
-      this.socket.emit('joinroom', {room: roomName, pass: null});
+      this.socket.emit('joinroom', {room: roomName, pass: null}, function (successful) {
+        observer.next(successful);
+      });
     });
     return observable;
   }
