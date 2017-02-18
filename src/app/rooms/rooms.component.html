@@ -6,18 +6,34 @@
   <div class="col s12">
     <div class="row">
       <div class="head col s9">
-        <h3>Room: {{roomId}}</h3>
+        <h3>{{roomId}}</h3>
       </div>
 
       <div class="input-field col s3">
-        <button class="btn waves-effect waves-light" type="submit" name="action">Leave</button>
+        <button class="btn waves-effect waves-light" type="submit" (click)="partRoom()" name="action">Leave</button>
       </div>
     </div>
-    <ul #chatbox name="messages" class="collection chatbox">
-      <li class="row collection-item" *ngFor="let message of messages">
-        {{message.nick}} - {{message.message}}
-      </li>
-    </ul>
+
+    <div class="row">
+      <div class="col s9">
+        <ul #chatbox name="messages" class="chatbox collection">
+          <li class="row collection-item" *ngFor="let message of messages">
+            {{message.nick}}: {{message.message}}
+          </li>
+        </ul>
+      </div>
+      <div class="col s3">
+        <ul #userbox name="users" class="chatbox collection">
+          <li class="row collection-item" *ngFor="let op of ops">
+            OP: {{op}}
+          </li>
+          <li class="row collection-item" *ngFor="let user of users">
+            User: {{user}}
+          </li>
+
+        </ul>
+      </div>
+    </div>
 
     <div class="row">
       <form [formGroup]="messageForm" (ngSubmit)="sendMsg()" class="col s12">

@@ -85,10 +85,26 @@ export class ChatService {
     const obs = new Observable( observer => {
       this.socket.on('updateusers', (room, users, ops) => {
         if (_room === room) {
-          observer.next({room: room, users: users, ops: ops});
+          const usrArr: string[] = [];
+          const opArr: string[] = [];
+          for (const x in users) {
+            if (x !== null) {
+              usrArr.push(x);
+            }
+          }
+          for (const x in ops) {
+            if (x !== null) {
+              opArr.push(x);
+            }
+          }
+          observer.next({usrArr, opArr});
         }
       });
     });
     return obs;
+  }
+  partRoom(_room) {
+    console.log('parting room: ' + _room);
+    this.socket.on('partroom', _room);
   }
 }

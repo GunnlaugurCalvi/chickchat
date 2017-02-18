@@ -1,4 +1,7 @@
 .chatbox {
-    height: 300px;
+    height: 50vh; 
     overflow-y: scroll;
+}
+button {
+    width: 100%;
 }

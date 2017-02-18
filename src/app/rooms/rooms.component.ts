@@ -20,24 +20,33 @@ export class RoomsComponent implements OnInit, AfterViewChecked {
     message: ['', Validators.required],
   });
   messages: Object[];
+  users: string[];
+  ops: Object[];
   roomId: string;
+  currUser: string;
 
   constructor(private router: Router, private chatService: ChatService, private route: ActivatedRoute, public fb: FormBuilder) {}
 
   ngOnInit() {
     this.roomId = this.route.snapshot.params['id'];
-    console.log(this.roomId);
     this.chatService.getMessages(this.roomId).subscribe(lst => {
-      console.log(lst);
       this.messages = lst;
+    });
+    this.chatService.getUsers(this.roomId).subscribe((usr: any) => {
+      this.users = usr.usrArr;
+      this.ops = usr.opArr;
     });
   }
   ngAfterViewChecked() {
-    this.chatboxContainer.nativeElement.scrollTop = this.chatboxContainer.nativeElement.scrollHeight + 42;
+    this.chatboxContainer.nativeElement.scrollTop = this.chatboxContainer.nativeElement.scrollHeight;
   }
 
   sendMsg() {
     this.chatService.sendMessage({roomName: this.roomId, msg: this.messageForm.value.message}).subscribe(successful => { });
     this.messageForm.reset();
+  }
+  partRoom() {
+    this.chatService.partRoom(this.roomId);
+    this.router.navigate(['/roomlist']);
   }
 }
