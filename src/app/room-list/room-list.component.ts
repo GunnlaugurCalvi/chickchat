@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import { ChatService } from '../chat.service';
 import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
 @Component({
   selector: 'app-room-list',
   templateUrl: './room-list.component.html',
@@ -8,9 +10,10 @@ import { Router } from '@angular/router';
 })
 export class RoomListComponent implements OnInit {
   rooms: string[];
-  newRoomName: string;
-  created: boolean = false;
-  constructor(private chatService: ChatService, private router: Router) { }
+  public newRoomForm = this.fb.group({
+    newRoom: ['', Validators.required],
+  });
+  constructor(private chatService: ChatService, private router: Router, public fb: FormBuilder) { }
 
   ngOnInit() {
     this.chatService.getRoomList().subscribe(lst => {
@@ -19,11 +22,11 @@ export class RoomListComponent implements OnInit {
     });
   }
   newRoom() {
-    if (this.newRoomName) {
-      this.chatService.addRoom(this.newRoomName).subscribe(successful => {
+    if (this.newRoom) {
+      this.chatService.addRoom(this.newRoomForm.value.newRoom).subscribe(successful => {
         if (successful) {
-          console.log('Adding a room: ' + this.newRoomName);
-          this.router.navigate(['/room', this.newRoomName]);
+          console.log('Adding a room: ' + this.newRoomForm.value.newRoom);
+          this.router.navigate(['/room', this.newRoomForm.value.newRoom]);
         } else {
           console.log('ERROR: Couldn\'t add a room');
         }
