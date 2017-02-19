@@ -24,12 +24,12 @@ export class RoomsComponent implements OnInit, AfterViewChecked {
   users: string[];
   ops: Object[];
   roomId: string;
+  // tslint:disable-next-line:no-inferrable-types
   userIsOp: boolean = false;
   currUser: string;
 
   constructor(private router: Router, private chatService: ChatService, private route: ActivatedRoute, public fb: FormBuilder,
               public toastr: ToastsManager, vcr: ViewContainerRef) {
-
               this.toastr.setRootViewContainerRef(vcr);
   }
 
@@ -43,14 +43,24 @@ export class RoomsComponent implements OnInit, AfterViewChecked {
       this.ops = usr.opArr;
       this.currUser = this.chatService.currUser;
       console.log(this.currUser);
-      for(var name in this.ops){
-        if(this.currUser === this.ops[name]){
+      for (const name in this.ops) {
+        if (this.currUser === this.ops[name]) {
           this.userIsOp = true;
         }
       }
-
+    });
+    this.chatService.kicked().subscribe((kUser: string) => {
+      if (this.currUser === kUser) {
+        this.router.navigate(['/roomlist']);
+      }
+    });
+    this.chatService.banned().subscribe((bUser: string) => {
+      if (this.currUser === bUser) {
+        this.router.navigate(['/roomlist']);
+      }
     });
   }
+
   ngAfterViewChecked() {
     this.chatboxContainer.nativeElement.scrollTop = this.chatboxContainer.nativeElement.scrollHeight;
   }
@@ -66,13 +76,13 @@ export class RoomsComponent implements OnInit, AfterViewChecked {
 
   kickUser(kUser) {
     this.chatService.kickUserFromParty(this.roomId, kUser).subscribe(successful => {
-      if(successful){
-        this.toastr.info(kUser + ' was kick', 'info', {dismiss: 'auto'});
-
+      if (successful) {
+        this.toastr.info(kUser + ' was kicked', 'info', {dismiss: 'auto'});
       }
     });
   }
-  banUser(bUser){
+  banUser(bUser) {
     this.chatService.banUserFromParty(this.roomId, bUser);
   }
+
 }

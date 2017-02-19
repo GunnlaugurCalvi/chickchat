@@ -37,10 +37,10 @@ export class RoomListComponent implements OnInit {
     this.chatService.joinRoom(room).subscribe(successful => {
       if (successful) {
         console.log('Joining room: ' + room);
+        this.router.navigate(['/room/' + room]);
       } else {
         console.log('ERROR: Couldn\'t join ' + room);
       }
     });
-    this.router.navigate(['/room/' + room]);
   }
 }

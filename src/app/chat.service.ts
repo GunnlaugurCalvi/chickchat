@@ -108,10 +108,11 @@ export class ChatService {
     console.log('parting room: ' + _room);
     this.socket.emit('partroom', _room);
   }
+
   kickUserFromParty(_room, _user): Observable<boolean> {
     const observerable = new Observable(observer => {
       this.socket.emit('kick', {room: _room, user: _user}, (successful) => {
-        if(successful){
+        if (successful) {
           console.log('kicked user: ' + _user + ' out of room: ' + _room);
         }
         observer.next(successful);
@@ -119,11 +120,29 @@ export class ChatService {
     });
     return observerable;
   }
-  banUserFromParty(_room, _user){
+  banUserFromParty(_room, _user) {
     this.socket.emit('ban', {room: _room, user: _user}, (successful) => {
-      if(successful){
+      if (successful) {
         console.log('banned user: ' + _user + ' from this room: ' + _room);
       }
     });
+  }
+  kicked() {
+    const observable = new Observable(observer => {
+      this.socket.on('kicked', (param1, param2) => {
+        console.log(param2);
+        observer.next(param2);
+      });
+    });
+    return observable;
+  }
+  banned() {
+    const observable = new Observable(observer => {
+      this.socket.on('banned', (param1, param2) => {
+        console.log(param2);
+        observer.next(param2);
+      });
+    });
+    return observable;
   }
 }
