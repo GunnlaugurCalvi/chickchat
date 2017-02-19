@@ -1,3 +1,4 @@
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {Component, OnInit, ViewContainerRef} from '@angular/core';
 import {} from '../chat.service';
 import {ChatService} from '../chat.service';
@@ -9,9 +10,12 @@ import { ToastsManager } from 'ng2-toastr/ng2-toastr';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
-  userName: string;
+  public loginForm = this.fb.group({
+    userName: ['', Validators.required],
+  });
 
-  constructor(private chatService: ChatService, private router: Router, public toastr: ToastsManager, vcr: ViewContainerRef) {
+  constructor(private chatService: ChatService, private router: Router, public toastr: ToastsManager, 
+              private vcr: ViewContainerRef, public fb: FormBuilder) {
     this.toastr.setRootViewContainerRef(vcr);
   }
 
@@ -20,12 +24,12 @@ export class LoginComponent implements OnInit {
 
 
   onLogin() {
-    console.log('Login called in component. Username: ' + this.userName);
-    if (this.userName.length <= 0) {
+    console.log('Login called in component. Username: ' + this.loginForm.value.userName);
+    if (this.loginForm.value.userName.length <= 0) {
       this.toastr.error('Must enter a name', 'Error');
       return;
     }
-    this.chatService.login(this.userName).subscribe(isSuccess => {
+    this.chatService.login(this.loginForm.value.userName).subscribe(isSuccess => {
       if (isSuccess) {
         console.log('successfully logged user in');
         this.router.navigate(['/roomlist']);
