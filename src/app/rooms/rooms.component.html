@@ -1,11 +1,7 @@
 <div class="row">
-  <div class="center">
-    <h1>Chitchat</h1>
-  </div>
-
   <div class="col s12">
     <div class="row">
-      <div class="head col s12 m9">
+      <div class="col s12 m9">
         <h3>{{roomId}}</h3>
       </div>
 
@@ -26,17 +22,17 @@
         <div class="row">
           <form [formGroup]="messageForm" (ngSubmit)="sendMsg()" class="col s12">
             <div class="row">
-              <div class="input-field col s9">
+              <div class="input-field col s12 m9">
                 <input formControlName="message" id="message" class="validate" required>
                 <label class="active" for="message">Message</label>
               </div>
-              <div class="input-field col s3">
+              <div class="input-field col s12 m3">
                 <button class="btn waves-effect waves-light" type="submit" name="action">Send
                   <i class="material-icons right">send</i>
                 </button>
               </div>
             </div>
-          </form>          
+          </form>
         </div>
       </div>
 
