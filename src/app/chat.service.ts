@@ -145,4 +145,8 @@ export class ChatService {
     });
     return observable;
   }
+  disconnect() {
+    console.log(this.currUser + ' has disconnected');
+    this.socket.emit('disconnect');
+  }
 }

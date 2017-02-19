@@ -43,4 +43,8 @@ export class RoomListComponent implements OnInit {
       }
     });
   }
+  disconnect() {
+    this.chatService.disconnect();
+    this.router.navigate(['/login']);
+  }
 }
