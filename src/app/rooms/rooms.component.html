@@ -28,9 +28,16 @@
             OP: {{op}}
           </li>
           <li class="row collection-item" *ngFor="let user of users">
-            User: {{user}}
-          </li>
+            <p *ngIf="userIsOp">
+              <button class="btn waves-effect waves-light" (click)="kickUser(user)">kick</button>
+              <button class="btn waves-effect waves-light" (click)="banUser(user)">ban</button>
+              <a>User: {{user}}</a>
+            </p>
+            <p *ngIf="!userIsOp">
+              User: {{user}}
+            </p>
 
+          </li>
         </ul>
       </div>
     </div>

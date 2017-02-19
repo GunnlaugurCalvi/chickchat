@@ -1,10 +1,11 @@
 import { AfterViewChecked } from '@angular/core/src/metadata/lifecycle_hooks';
 import { elementAt } from '@angular-cli/ast-tools/node_modules/rxjs/operator/elementAt';
 import { ElementFinder } from 'protractor/built/element';
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import { ChatService } from '../chat.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
 
 @Component({
@@ -23,9 +24,14 @@ export class RoomsComponent implements OnInit, AfterViewChecked {
   users: string[];
   ops: Object[];
   roomId: string;
+  userIsOp: boolean = false;
   currUser: string;
 
-  constructor(private router: Router, private chatService: ChatService, private route: ActivatedRoute, public fb: FormBuilder) {}
+  constructor(private router: Router, private chatService: ChatService, private route: ActivatedRoute, public fb: FormBuilder,
+              public toastr: ToastsManager, vcr: ViewContainerRef) {
+
+              this.toastr.setRootViewContainerRef(vcr);
+  }
 
   ngOnInit() {
     this.roomId = this.route.snapshot.params['id'];
@@ -35,6 +41,14 @@ export class RoomsComponent implements OnInit, AfterViewChecked {
     this.chatService.getUsers(this.roomId).subscribe((usr: any) => {
       this.users = usr.usrArr;
       this.ops = usr.opArr;
+      this.currUser = this.chatService.currUser;
+      console.log(this.currUser);
+      for(var name in this.ops){
+        if(this.currUser === this.ops[name]){
+          this.userIsOp = true;
+        }
+      }
+
     });
   }
   ngAfterViewChecked() {
@@ -48,5 +62,17 @@ export class RoomsComponent implements OnInit, AfterViewChecked {
   partRoom() {
     this.chatService.partRoom(this.roomId);
     this.router.navigate(['/roomlist']);
+  }
+
+  kickUser(kUser) {
+    this.chatService.kickUserFromParty(this.roomId, kUser).subscribe(successful => {
+      if(successful){
+        this.toastr.info(kUser + ' was kick', 'info', {dismiss: 'auto'});
+
+      }
+    });
+  }
+  banUser(bUser){
+    this.chatService.banUserFromParty(this.roomId, bUser);
   }
 }

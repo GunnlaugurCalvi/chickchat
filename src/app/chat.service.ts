@@ -6,7 +6,7 @@ import { Observable } from 'rxjs/Observable';
 export class ChatService {
 
   socket: any;
-
+  currUser: string;
   constructor() {
     this.socket = io('http://localhost:8080/');
     this.socket.on('connect', isConnected => {
@@ -15,6 +15,7 @@ export class ChatService {
   }
 
   login(userName: string): Observable<boolean> {
+    this.currUser = userName;
     const observable = new Observable(observer => {
       this.socket.emit('adduser', userName, function(successful) {
         observer.next(successful);
@@ -105,6 +106,24 @@ export class ChatService {
   }
   partRoom(_room) {
     console.log('parting room: ' + _room);
-    this.socket.on('partroom', _room);
+    this.socket.emit('partroom', _room);
+  }
+  kickUserFromParty(_room, _user): Observable<boolean> {
+    const observerable = new Observable(observer => {
+      this.socket.emit('kick', {room: _room, user: _user}, (successful) => {
+        if(successful){
+          console.log('kicked user: ' + _user + ' out of room: ' + _room);
+        }
+        observer.next(successful);
+      });
+    });
+    return observerable;
+  }
+  banUserFromParty(_room, _user){
+    this.socket.emit('ban', {room: _room, user: _user}, (successful) => {
+      if(successful){
+        console.log('banned user: ' + _user + ' from this room: ' + _room);
+      }
+    });
   }
 }
