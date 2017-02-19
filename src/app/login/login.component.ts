@@ -14,7 +14,7 @@ export class LoginComponent implements OnInit {
     userName: ['', Validators.required],
   });
 
-  constructor(private chatService: ChatService, private router: Router, public toastr: ToastsManager, 
+  constructor(private chatService: ChatService, private router: Router, public toastr: ToastsManager,
               private vcr: ViewContainerRef, public fb: FormBuilder) {
     this.toastr.setRootViewContainerRef(vcr);
   }
