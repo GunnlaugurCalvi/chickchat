@@ -17,7 +17,7 @@ export class RoomListComponent implements OnInit {
     newRoom: ['', Validators.required],
   });
   constructor(private chatService: ChatService, private router: Router, public fb: FormBuilder,
-              public toastr: ToastsManager, vcr: ViewContainerRef) {
+  public toastr: ToastsManager, vcr: ViewContainerRef) {
 
     this.toastr.setRootViewContainerRef(vcr);
   }
@@ -29,11 +29,11 @@ export class RoomListComponent implements OnInit {
     });
     this.isKicked = this.chatService.isKicked;
     if (this.isKicked === true) {
-      this.toastr.warning('OP kicked you from this room', 'Warning', {dismiss: 'auto'});
+      this.toastr.warning('You have been kicked', 'Warning', {dismiss: 'auto'});
     }
     this.isBanned = this.chatService.isBanned;
     if (this.isBanned === true) {
-      this.toastr.warning('OP banned you from this room and you are not allowd back in!!', 'Warning', {dismiss: 'auto'});
+      this.toastr.error('You have been banned', 'Error', {dismiss: 'auto'});
     }
   }
   newRoom() {
@@ -43,6 +43,7 @@ export class RoomListComponent implements OnInit {
           console.log('Adding a room: ' + this.newRoomForm.value.newRoom);
           this.router.navigate(['/room', this.newRoomForm.value.newRoom]);
         } else {
+          this.toastr.error('Couldn\'t add a room', 'Error', {dismiss: 'auto'});
           console.log('ERROR: Couldn\'t add a room');
         }
       });
@@ -51,10 +52,9 @@ export class RoomListComponent implements OnInit {
   joinRoom(room: string) {
     this.chatService.joinRoom(room).subscribe(successful => {
       if (successful) {
-        console.log('Joining room: ' + room);
         this.router.navigate(['/room/' + room]);
       } else {
-        console.log('ERROR: Couldn\'t join ' + room);
+        this.toastr.error('You have been banned', 'Error', {dismiss: 'auto'});
       }
     });
   }

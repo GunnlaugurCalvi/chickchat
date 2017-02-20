@@ -41,7 +41,6 @@ export class RoomsComponent implements OnInit, AfterViewChecked {
       this.users = usr.usrArr;
       this.ops = usr.opArr;
       this.currUser = this.chatService.currUser;
-      console.log(this.currUser);
       for (const name in this.ops) {
         if (this.currUser === this.ops[name]) {
           this.userIsOp = true;
@@ -58,6 +57,9 @@ export class RoomsComponent implements OnInit, AfterViewChecked {
         this.router.navigate(['/roomlist']);
       }
     });
+    this.chatService.getPrivateMessage().subscribe((obj: any) => {
+      this.toastr.info(obj.msg, 'Private message from ' + obj.user, {dismiss: 'click'});
+    });
   }
 
   ngAfterViewChecked() {
@@ -67,6 +69,9 @@ export class RoomsComponent implements OnInit, AfterViewChecked {
   sendMsg() {
     this.chatService.sendMessage({roomName: this.roomId, msg: this.messageForm.value.message});
     this.messageForm.reset();
+  }
+  sendPrivateMessage(user: string) {
+    this.chatService.sendPrivateMessage({nick: user, message: this.messageForm.value.message});
   }
   partRoom() {
     this.chatService.partRoom(this.roomId);
@@ -87,5 +92,4 @@ export class RoomsComponent implements OnInit, AfterViewChecked {
       }
     });
   }
-
 }
