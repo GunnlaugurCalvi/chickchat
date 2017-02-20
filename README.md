@@ -6,8 +6,9 @@ MADE USING:
 - MATERIALIZECSS
 - SOCKET.IO 
 - NG2-TOASTR
-#Installation
-Run "npm install" to install all packages that depends on this project!
+
+# Installation
+Run ''' npm install ''' to install all packages that depends on this project!
 
 #Run Program
 To start the socket.io server run "node chatserver.js" in the server directory. "http://localhost:8080/".
