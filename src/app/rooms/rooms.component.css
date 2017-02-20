@@ -5,3 +5,7 @@
 button {
     width: 100%;
 }
+a:hover {
+    cursor: pointer;
+    color: green;
+}
