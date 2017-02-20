@@ -48,7 +48,7 @@ export class RoomListComponent implements OnInit {
       });
     }
   }
-  joinRoom(room) {
+  joinRoom(room: string) {
     this.chatService.joinRoom(room).subscribe(successful => {
       if (successful) {
         console.log('Joining room: ' + room);

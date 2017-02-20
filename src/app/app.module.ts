@@ -25,10 +25,7 @@ import { ToastModule, ToastOptions } from 'ng2-toastr/ng2-toastr';
     FormsModule,
     ReactiveFormsModule,
     HttpModule,
-    ToastModule.forRoot([{
-      animate: 'flyRight',
-      positionClass: 'toast-bottom-right'
-    }]),
+    ToastModule.forRoot(),
     RouterModule.forRoot([{
       path: '',
       redirectTo: 'login',

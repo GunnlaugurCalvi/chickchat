@@ -61,20 +61,11 @@ export class ChatService {
     return observable;
   }
 
-  sendMessage(param): Observable<boolean> {
-    const observable = new Observable(observer => {
-      this.socket.emit('sendmsg', param, (successful) => {
-        if (successful) {
-          console.log('WOW WE SENT MESSAGE!');
-        } else {
-          console.log('ERROR: COULDN\'T SEND MESSAGE');
-        }
-      });
-    });
-    return observable;
+  sendMessage(param: Object) {
+    this.socket.emit('sendmsg', param);
   }
 
-  getMessages(_room): Observable<string[]> {
+  getMessages(_room: string): Observable<string[]> {
     const obs = new Observable( observer => {
       this.socket.on('updatechat', (room, msg) => {
         if (_room === room) {
@@ -85,7 +76,7 @@ export class ChatService {
     return obs;
   }
 
-  getUsers(_room): Observable<string[]> {
+  getUsers(_room: string): Observable<string[]> {
     const obs = new Observable( observer => {
       this.socket.on('updateusers', (room, users, ops) => {
         if (_room === room) {
@@ -107,12 +98,12 @@ export class ChatService {
     });
     return obs;
   }
-  partRoom(_room) {
+  partRoom(_room: string) {
     console.log('parting room: ' + _room);
     this.socket.emit('partroom', _room);
   }
 
-  kickUserFromParty(_room, _user): Observable<boolean> {
+  kickUserFromParty(_room: string, _user: string): Observable<boolean> {
     const observerable = new Observable(observer => {
       this.socket.emit('kick', {room: _room, user: _user}, (successful) => {
         if (successful) {
@@ -123,7 +114,7 @@ export class ChatService {
     });
     return observerable;
   }
-  banUserFromParty(_room, _user) {
+  banUserFromParty(_room: string, _user: string): Observable<boolean> {
     const observable = new Observable(observer => {
       this.socket.emit('ban', {room: _room, user: _user}, (successful) => {
         if (successful) {
@@ -134,7 +125,7 @@ export class ChatService {
     });
     return observable;
   }
-  kicked() {
+  kicked(): Observable<string> {
     const observable = new Observable(observer => {
       this.socket.on('kicked', (param1, param2) => {
         console.log(param2);
@@ -144,7 +135,7 @@ export class ChatService {
     });
     return observable;
   }
-  banned() {
+  banned(): Observable<string> {
     const observable = new Observable(observer => {
       this.socket.on('banned', (param1, param2) => {
         console.log(param2);

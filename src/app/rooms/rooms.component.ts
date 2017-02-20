@@ -65,7 +65,7 @@ export class RoomsComponent implements OnInit, AfterViewChecked {
   }
 
   sendMsg() {
-    this.chatService.sendMessage({roomName: this.roomId, msg: this.messageForm.value.message}).subscribe(successful => { });
+    this.chatService.sendMessage({roomName: this.roomId, msg: this.messageForm.value.message});
     this.messageForm.reset();
   }
   partRoom() {
@@ -73,14 +73,14 @@ export class RoomsComponent implements OnInit, AfterViewChecked {
     this.router.navigate(['/roomlist']);
   }
 
-  kickUser(kUser) {
+  kickUser(kUser: string) {
     this.chatService.kickUserFromParty(this.roomId, kUser).subscribe(successful => {
       if (successful) {
         this.toastr.info(kUser + ' was kicked', 'info', {dismiss: 'auto'});
       }
     });
   }
-  banUser(bUser) {
+  banUser(bUser: string) {
     this.chatService.banUserFromParty(this.roomId, bUser).subscribe(successful => {
       if (successful) {
         this.toastr.info(bUser + ' was banned', 'info', {dismiss: 'auto'});
