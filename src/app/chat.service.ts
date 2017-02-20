@@ -7,6 +7,9 @@ export class ChatService {
 
   socket: any;
   currUser: string;
+  isKicked: boolean;
+  isBanned: boolean;
+
   constructor() {
     this.socket = io('http://localhost:8080/');
     this.socket.on('connect', isConnected => {
@@ -62,7 +65,7 @@ export class ChatService {
     const observable = new Observable(observer => {
       this.socket.emit('sendmsg', param, (successful) => {
         if (successful) {
-          console.log('WOW WE JOINED!');
+          console.log('WOW WE SENT MESSAGE!');
         } else {
           console.log('ERROR: COULDN\'T SEND MESSAGE');
         }
@@ -121,16 +124,21 @@ export class ChatService {
     return observerable;
   }
   banUserFromParty(_room, _user) {
-    this.socket.emit('ban', {room: _room, user: _user}, (successful) => {
-      if (successful) {
-        console.log('banned user: ' + _user + ' from this room: ' + _room);
-      }
+    const observable = new Observable(observer => {
+      this.socket.emit('ban', {room: _room, user: _user}, (successful) => {
+        if (successful) {
+          console.log('banned user: ' + _user + ' from this room: ' + _room);
+        }
+        observer.next(successful);
+      });
     });
+    return observable;
   }
   kicked() {
     const observable = new Observable(observer => {
       this.socket.on('kicked', (param1, param2) => {
         console.log(param2);
+        this.isKicked = true;
         observer.next(param2);
       });
     });
@@ -140,6 +148,7 @@ export class ChatService {
     const observable = new Observable(observer => {
       this.socket.on('banned', (param1, param2) => {
         console.log(param2);
+        this.isBanned = true;
         observer.next(param2);
       });
     });

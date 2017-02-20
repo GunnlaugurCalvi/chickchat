@@ -1,6 +1,4 @@
 import { AfterViewChecked } from '@angular/core/src/metadata/lifecycle_hooks';
-import { elementAt } from '@angular-cli/ast-tools/node_modules/rxjs/operator/elementAt';
-import { ElementFinder } from 'protractor/built/element';
 import {Component, ElementRef, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import { ChatService } from '../chat.service';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -35,6 +33,7 @@ export class RoomsComponent implements OnInit, AfterViewChecked {
 
   ngOnInit() {
     this.roomId = this.route.snapshot.params['id'];
+
     this.chatService.getMessages(this.roomId).subscribe(lst => {
       this.messages = lst;
     });
@@ -82,7 +81,11 @@ export class RoomsComponent implements OnInit, AfterViewChecked {
     });
   }
   banUser(bUser) {
-    this.chatService.banUserFromParty(this.roomId, bUser);
+    this.chatService.banUserFromParty(this.roomId, bUser).subscribe(successful => {
+      if (successful) {
+        this.toastr.info(bUser + ' was banned', 'info', {dismiss: 'auto'});
+      }
+    });
   }
 
 }

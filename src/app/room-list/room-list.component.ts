@@ -1,7 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewContainerRef} from '@angular/core';
 import { ChatService } from '../chat.service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
 @Component({
   selector: 'app-room-list',
@@ -10,16 +11,30 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class RoomListComponent implements OnInit {
   rooms: string[];
+  isKicked: boolean;
+  isBanned: boolean;
   public newRoomForm = this.fb.group({
     newRoom: ['', Validators.required],
   });
-  constructor(private chatService: ChatService, private router: Router, public fb: FormBuilder) { }
+  constructor(private chatService: ChatService, private router: Router, public fb: FormBuilder,
+              public toastr: ToastsManager, vcr: ViewContainerRef) {
+
+    this.toastr.setRootViewContainerRef(vcr);
+  }
 
   ngOnInit() {
     this.chatService.getRoomList().subscribe(lst => {
       this.rooms = lst;
       console.log(this.rooms);
     });
+    this.isKicked = this.chatService.isKicked;
+    if (this.isKicked === true) {
+      this.toastr.warning('OP kicked you from this room', 'Warning', {dismiss: 'auto'});
+    }
+    this.isBanned = this.chatService.isBanned;
+    if (this.isBanned === true) {
+      this.toastr.warning('OP banned you from this room and you are not allowd back in!!', 'Warning', {dismiss: 'auto'});
+    }
   }
   newRoom() {
     if (this.newRoom) {
