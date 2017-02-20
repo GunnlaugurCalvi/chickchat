@@ -41,7 +41,7 @@
           <li class="row collection-item" *ngFor="let op of ops">
             OP: {{op}}
             <span *ngIf="currUser!=op">
-              <a class="" (click)="sendPrivateMessage(user)">
+              <a class="right" (click)="sendPrivateMessage(op)">
                 <i class="material-icons">message</i>
               </a>
             </span>
@@ -49,18 +49,20 @@
           <li class="row collection-item" *ngFor="let user of users">
             <span *ngIf="userIsOp">
               User: {{user}}
-              <a class="" (click)="kickUser(user)">
-              <i class="material-icons">exit_to_app</i>
-              </a>
-              <a class="" (click)="banUser(user)">
-                <i class="material-icons">not_interested</i>
-              </a>
+              <span class="right">
+                <a class="" (click)="kickUser(user)">
+                <i class="material-icons">exit_to_app</i>
+                </a>
+                <a class="" (click)="banUser(user)">
+                  <i class="material-icons">not_interested</i>
+                </a>
+              </span>
             </span>
             <span *ngIf="!userIsOp">
               User: {{user}}
             </span>
-            <span *ngIf="currUser!=user">
-              <a class="" (click)="sendPrivateMessage(user)">
+            <span class="right" *ngIf="currUser!=user">
+              <a (click)="sendPrivateMessage(user)">
                 <i class="material-icons">message</i>
               </a>
             </span>
