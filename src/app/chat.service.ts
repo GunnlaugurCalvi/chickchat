@@ -30,6 +30,10 @@ export class ChatService {
   joinRoom(roomName: string): Observable<boolean> {
     const observable = new Observable(observer => {
       this.socket.emit('joinroom', {room: roomName, pass: null}, function(successful) {
+        if (successful) {
+          this.isKicked = false;
+          this.isBanned = false;
+        }
         observer.next(successful);
       });
     });
@@ -65,12 +69,25 @@ export class ChatService {
     this.socket.emit('sendmsg', param);
   }
 
+  sendPrivateMessage(param: Object) {
+    this.socket.emit('privatemsg', param, (successful) => { });
+  }
+
   getMessages(_room: string): Observable<string[]> {
     const obs = new Observable( observer => {
       this.socket.on('updatechat', (room, msg) => {
         if (_room === room) {
           observer.next(msg);
         }
+      });
+    });
+    return obs;
+  }
+
+  getPrivateMessage(): Observable<string> {
+    const obs = new Observable( observer => {
+      this.socket.on('recv_privatemsg', (user, msg) => {
+        observer.next({user: user, msg: msg});
       });
     });
     return obs;

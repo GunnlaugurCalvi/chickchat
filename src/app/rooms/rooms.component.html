@@ -40,16 +40,30 @@
         <ul #userbox name="users" class="collection">
           <li class="row collection-item" *ngFor="let op of ops">
             OP: {{op}}
+            <span *ngIf="currUser!=op">
+              <a class="" (click)="sendPrivateMessage(user)">
+                <i class="material-icons">message</i>
+              </a>
+            </span>
           </li>
           <li class="row collection-item" *ngFor="let user of users">
-            <p *ngIf="userIsOp">
-              <button class="btn waves-effect waves-light" (click)="kickUser(user)">kick</button>
-              <button class="btn waves-effect waves-light" (click)="banUser(user)">ban</button>
-              <a>User: {{user}}</a>
-            </p>
-            <p *ngIf="!userIsOp">
+            <span *ngIf="userIsOp">
               User: {{user}}
-            </p>
+              <a class="" (click)="kickUser(user)">
+              <i class="material-icons">exit_to_app</i>
+              </a>
+              <a class="" (click)="banUser(user)">
+                <i class="material-icons">not_interested</i>
+              </a>
+            </span>
+            <span *ngIf="!userIsOp">
+              User: {{user}}
+            </span>
+            <span *ngIf="currUser!=user">
+              <a class="" (click)="sendPrivateMessage(user)">
+                <i class="material-icons">message</i>
+              </a>
+            </span>
           </li>
         </ul>
       </div>
