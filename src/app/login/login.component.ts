@@ -14,12 +14,18 @@ export class LoginComponent implements OnInit {
     userName: ['', Validators.required],
   });
 
+  isDisconnected: boolean;
+
   constructor(private chatService: ChatService, private router: Router, public toastr: ToastsManager,
               private vcr: ViewContainerRef, public fb: FormBuilder) {
     this.toastr.setRootViewContainerRef(vcr);
   }
 
   ngOnInit() {
+    this.isDisconnected = this.chatService.isDisconnected;
+    if (this.isDisconnected === true) {
+      this.toastr.success('You have disconnected', 'Success', {dismiss: 'auto'});
+    }
   }
 
 

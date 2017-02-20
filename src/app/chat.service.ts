@@ -9,6 +9,7 @@ export class ChatService {
   currUser: string;
   isKicked: boolean;
   isBanned: boolean;
+  isDisconnected: boolean;
 
   constructor() {
     this.socket = io('http://localhost:8080/');
@@ -154,6 +155,7 @@ export class ChatService {
     return observable;
   }
   disconnect() {
+    this.isDisconnected = true;
     this.socket.emit('disconnect');
   }
 }

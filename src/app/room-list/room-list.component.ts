@@ -13,6 +13,7 @@ export class RoomListComponent implements OnInit {
   rooms: string[];
   isKicked: boolean;
   isBanned: boolean;
+
   public newRoomForm = this.fb.group({
     newRoom: ['', Validators.required],
   });
@@ -28,23 +29,23 @@ export class RoomListComponent implements OnInit {
       console.log(this.rooms);
     });
     this.isKicked = this.chatService.isKicked;
+    this.isBanned = this.chatService.isBanned;
+
     if (this.isKicked === true) {
       this.toastr.warning('You have been kicked', 'Warning', {dismiss: 'auto'});
     }
-    this.isBanned = this.chatService.isBanned;
     if (this.isBanned === true) {
       this.toastr.error('You have been banned', 'Error', {dismiss: 'auto'});
     }
   }
+
   newRoom() {
     if (this.newRoom) {
       this.chatService.addRoom(this.newRoomForm.value.newRoom).subscribe(successful => {
         if (successful) {
-          console.log('Adding a room: ' + this.newRoomForm.value.newRoom);
           this.router.navigate(['/room', this.newRoomForm.value.newRoom]);
         } else {
           this.toastr.error('Couldn\'t add a room', 'Error', {dismiss: 'auto'});
-          console.log('ERROR: Couldn\'t add a room');
         }
       });
     }
