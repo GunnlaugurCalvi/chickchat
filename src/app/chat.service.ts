@@ -99,16 +99,12 @@ export class ChatService {
     return obs;
   }
   partRoom(_room: string) {
-    console.log('parting room: ' + _room);
     this.socket.emit('partroom', _room);
   }
 
   kickUserFromParty(_room: string, _user: string): Observable<boolean> {
     const observerable = new Observable(observer => {
       this.socket.emit('kick', {room: _room, user: _user}, (successful) => {
-        if (successful) {
-          console.log('kicked user: ' + _user + ' out of room: ' + _room);
-        }
         observer.next(successful);
       });
     });
@@ -117,9 +113,6 @@ export class ChatService {
   banUserFromParty(_room: string, _user: string): Observable<boolean> {
     const observable = new Observable(observer => {
       this.socket.emit('ban', {room: _room, user: _user}, (successful) => {
-        if (successful) {
-          console.log('banned user: ' + _user + ' from this room: ' + _room);
-        }
         observer.next(successful);
       });
     });
@@ -128,7 +121,6 @@ export class ChatService {
   kicked(): Observable<string> {
     const observable = new Observable(observer => {
       this.socket.on('kicked', (param1, param2) => {
-        console.log(param2);
         this.isKicked = true;
         observer.next(param2);
       });
@@ -138,7 +130,6 @@ export class ChatService {
   banned(): Observable<string> {
     const observable = new Observable(observer => {
       this.socket.on('banned', (param1, param2) => {
-        console.log(param2);
         this.isBanned = true;
         observer.next(param2);
       });
@@ -146,7 +137,6 @@ export class ChatService {
     return observable;
   }
   disconnect() {
-    console.log(this.currUser + ' has disconnected');
     this.socket.emit('disconnect');
   }
 }
